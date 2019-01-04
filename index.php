@@ -1,3 +1,6 @@
+<?php 
+    require "../checkSession.php";
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,21 +14,14 @@
     <script src="js/freeboard.thirdparty.min.js"></script>
     <script type="text/javascript">
         head.js("js/freeboard_plugins.min.js",
+                "js/r0zboard.js",
                 // *** Load more plugins here ***
                 function(){
                     $(function()
                     { //DOM Ready
                         freeboard.initialize(true);
 
-                        var hashpattern = window.location.hash.match(/(&|#)source=([^&]+)/);
-                        if (hashpattern !== null) {
-                            $.getJSON(hashpattern[2], function(data) {
-                                freeboard.loadDashboard(data, function() {
-                                    freeboard.setEditing(false);
-                                });
-                            });
-                        }
-
+                        loadFromServer();
                     });
                 });
     </script>
@@ -45,11 +41,16 @@
                 <h1 id="board-logo" class="title bordered">freeboard</h1>
                 <div id="board-actions">
                     <ul class="board-toolbar vertical">
-                        <li data-bind="click: loadDashboardFromLocalFile"><i id="full-screen-icon" class="icon-folder-open icon-white"></i><label id="full-screen">Load Freeboard</label></li>
-                        <li><i class="icon-download-alt icon-white"></i>
-                            <label data-bind="click: saveDashboardClicked">Save Freeboard</label>
+                        <li data-bind="click: loadDashboardFromLocalFile">
+                            <i id="full-screen-icon" class="icon-folder-open icon-white"></i><label id="full-screen">Import Freeboard</label>
+                        </li>
+                        <li><i class="icon-folder-open icon-white"></i>
+                            <label data-bind="click: saveDashboardClicked">Export Freeboard</label>
                             <label style="display: none;" data-bind="click: saveDashboard" data-pretty="true">[Pretty]</label>
                             <label style="display: none;" data-bind="click: saveDashboard" data-pretty="false">[Minified]</label>
+                        </li>
+                        <li><i class="icon-download-alt icon-white"></i>
+                            <label onclick="saveToServer()">Save Freeboard</label>
                         </li>
                         <li id="add-pane" data-bind="click: createPane"><i class="icon-plus icon-white"></i><label>Add Pane</label></li>
                     </ul>
