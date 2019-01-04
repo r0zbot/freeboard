@@ -2,3 +2,9 @@
 node_modules
 
 key.txt
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
