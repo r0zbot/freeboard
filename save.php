@@ -4,7 +4,7 @@
         require "../checkSession.php";
 
         //Encrypt file
-        $key = "0f8c0d6af5be928ba8cc87d682aa225d";
+        $key = file_get_contents("key.txt");
         $plaintext = $_REQUEST["board"];
         $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
         $iv = openssl_random_pseudo_bytes($ivlen);

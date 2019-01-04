@@ -3,7 +3,7 @@
 
     //Decrypt
     $ciphertext = file_get_contents("board.json");
-    $key = "0f8c0d6af5be928ba8cc87d682aa225d";
+    $key = file_get_contents("key.txt");
     $c = base64_decode($ciphertext);
     $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
     $iv = substr($c, 0, $ivlen);
